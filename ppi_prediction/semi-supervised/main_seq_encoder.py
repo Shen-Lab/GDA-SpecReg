@@ -95,11 +95,6 @@ def train():
     return loss_total / len(dataloader)
 
 
-def save_model(metrics):
-    if args.seq_encoder == 'transformer': torch.save({'seq_encoder':seq_encoder.state_dict(), 'classifier':classifier.state_dict(), 'metrics':metrics}, './weights/' + args.src_species + '_' + args.tgt_species + '_transformer' + str(args.transformer_bucket_size) + '_suffix' + args.suffix + '.pt')
-    if args.seq_encoder == 'hrnn': torch.save({'seq_encoder':seq_encoder.state_dict(), 'classifier':classifier.state_dict(), 'metrics':metrics}, './weights/' + args.src_species + '_' + args.tgt_species + '_hrnn' + str(args.hrnn_kmer) + '_suffix' + args.suffix + '.pt')
-
-
 # training and evaluation
 metrics = utils.evaluate(G_src, G_tgt, seq_encoder, graph_encoder, classifier, use_gnn=False)
 print('initialization validation roc/ap', metrics[0], metrics[1], 'test roc/ap coexpression', metrics[2], metrics[3], 'experiments', metrics[4], metrics[5])
@@ -113,7 +108,6 @@ for epoch in range(args.epoch_num):
     # store best validated performance
     if auroc_max < np.mean(metrics[:2]):
         auroc_max, metrics_best = np.mean(metrics[:2]), metrics
-        save_model(metrics)
 
 print('best validation roc/ap', metrics_best[0], metrics_best[1], 'test roc/ap coexpression', metrics_best[2], metrics_best[3], 'experiments', metrics_best[4], metrics_best[5])
 

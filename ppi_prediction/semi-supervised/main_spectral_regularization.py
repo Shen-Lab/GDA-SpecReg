@@ -125,20 +125,6 @@ def train():
     return loss_total
 
 
-def save_model(metrics):
-    weight_path = './weights/' + args.src_species + '_' + args.tgt_species
-    if args.seq_encoder == 'transformer': weight_path += '_transformer' + str(args.transformer_bucket_size)
-    if args.seq_encoder == 'hrnn': weight_path += '_hrnn' + str(args.hrnn_kmer)
-    if args.graph_encoder == 'gat': weight_path += '_gat' + str(args.gat_attn_head)
-    if args.graph_encoder == 'gin': weight_path += '_gin' + str(args.gin_mlp_layer)
-    weight_path += '_advTrain' + str(args.adv_train_gamma) 
-    if args.spectral_reg_smooth_gamma > 0: weight_path += '_specRegSmooth' + str(args.spectral_reg_smooth_gamma) + '+' + str(args.spectral_reg_gamma2)
-    if args.spectral_reg_lowpass_gamma > 0: weight_path += '_specRegLowpass' + str(args.spectral_reg_lowpass_gamma) + '+' + str(args.spectral_reg_gamma2)
-    weight_path += '_suffix' + args.suffix + '.pt'
-
-    torch.save({'seq_encoder':seq_encoder.state_dict(), 'graph_encoder':graph_encoder.state_dict(), 'classifier':classifier.state_dict(), 'critic':critic.state_dict(), 'metrics':metrics}, weight_path)
-
-
 # training and evaluation
 metrics = utils.evaluate(G_src, G_tgt, seq_encoder, graph_encoder, classifier)
 print('initialization validation roc/ap', metrics[0], metrics[1], 'test roc/ap coexpression', metrics[2], metrics[3], 'experiments', metrics[4], metrics[5])
@@ -152,7 +138,6 @@ for epoch in range(args.epoch_num):
     # store best validated performance
     if auroc_max < np.mean(metrics[:2]):
         auroc_max, metrics_best = np.mean(metrics[:2]), metrics
-        save_model(metrics)
 
 print('best validation roc/ap', metrics_best[0], metrics_best[1], 'test roc/ap coexpression', metrics_best[2], metrics_best[3], 'experiments', metrics_best[4], metrics_best[5])
 
