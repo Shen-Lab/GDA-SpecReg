@@ -290,7 +290,7 @@ def get_laplacian_evd(edge_index, node_num):
     pca = PCA()
     pca.fit(adj)
 
-    eival = torch.tensor( pca.explained_variance_, dtype=torch.float32 ).to('cuda')
+    eival = torch.tensor( pca.explained_variance_ ** 0.5, dtype=torch.float32 ).to('cuda')
     eivec = torch.tensor( pca.components_, dtype=torch.float32 ).to('cuda')
     return eival, eivec
 
