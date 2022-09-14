@@ -30,7 +30,7 @@ print(args)
 
 
 G_src = utils.read_ppi(args.src_species)
-G_tgt = utils.read_ppi(args.tgt_species, train_ratio=0.001)
+G_tgt = utils.read_ppi(args.tgt_species, train_ratio=0)
 
 # dataloader
 dataset = utils.dataset_pairwise(G_src, G_tgt, randwalk_step=args.randwalk_step)

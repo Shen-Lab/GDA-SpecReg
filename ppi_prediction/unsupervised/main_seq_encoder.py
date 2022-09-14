@@ -15,7 +15,7 @@ parser.add_argument('--src_species', type=str, default='human')
 parser.add_argument('--tgt_species', type=str, default='yeast')
 parser.add_argument('--randwalk_step', type=int, default=128)
 parser.add_argument('--seq_encoder', type=str, default='transformer')
-parser.add_argument('--transformer_bucket_size', type=int, default=64)
+parser.add_argument('--transformer_bucket_size', type=int, default=32)
 parser.add_argument('--hrnn_kmer', type=int, default=50)
 parser.add_argument('--graph_encoder', type=str, default='gin')
 parser.add_argument('--layer_num', type=int, default=3)
@@ -29,7 +29,7 @@ print(args)
 
 
 G_src = utils.read_ppi(args.src_species)
-G_tgt = utils.read_ppi(args.tgt_species, train_ratio=0.001)
+G_tgt = utils.read_ppi(args.tgt_species, train_ratio=0)
 
 # dataloader
 dataset = utils.dataset_pairwise(G_src, G_tgt, randwalk_step=args.randwalk_step)
