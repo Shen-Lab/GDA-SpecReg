@@ -300,7 +300,8 @@ def spectral_regularization_smooth(graph_encoder, x_src, edge_index_src, edge_at
     node_num = x_src.shape[0]
     loss = 0
 
-    eival, eivec = get_laplacian_evd(edge_index_src, node_num)
+    try: eival, eivec = get_laplacian_evd(edge_index_src, node_num)
+    except: return torch.zeros(1)
     x_out = graph_encoder(x_src, edge_index_src, edge_attr_src)
     # get spectral response
     x = torch.einsum('nm,md->nd', eivec, x_src)
@@ -310,7 +311,8 @@ def spectral_regularization_smooth(graph_encoder, x_src, edge_index_src, edge_at
     out_delta = (x_out[:-1] - x_out[1:]).abs()
     loss += ( relu(out_delta - gamma * delta).mean() * gamma2 )
 
-    eival, eivec = get_laplacian_evd(edge_index_tgt, node_num)
+    try: eival, eivec = get_laplacian_evd(edge_index_tgt, node_num)
+    except: return torch.zeros(1)
     x_out = graph_encoder(x_tgt, edge_index_tgt, edge_attr_tgt)
     # get spectral response
     x = torch.einsum('nm,md->nd', eivec, x_tgt)
@@ -327,14 +329,14 @@ def spectral_regularization_lowpass(graph_encoder, x_src, edge_index_src, edge_a
     loss = 0
 
     try: eival, eivec = get_laplacian_evd(edge_index_src, node_num)
-    except: return 0
+    except: return torch.zeros(1)
     x = torch.einsum('nm,md->nd', eivec, x_src)
     x_out = graph_encoder(x_src, edge_index_src, edge_attr_src)
     x_out = torch.einsum('nm,md->nd', eivec, x_out)
     loss += relu(x_out.abs() - gamma * x.abs()).mean()
 
     try: eival, eivec = get_laplacian_evd(edge_index_tgt, node_num)
-    except: return 0
+    except: return torch.zeros(1)
     x = torch.einsum('nm,md->nd', eivec, x_tgt)
     x_out = graph_encoder(x_tgt, edge_index_tgt, edge_attr_tgt)
     x_out = torch.einsum('nm,md->nd', eivec, x_out)
