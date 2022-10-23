@@ -96,8 +96,10 @@ class gat(nn.Module):
 
     def forward(self, x, edge_index, edge_attr):
         for gatconv in self.gatconv_list:
+            x0 = x ###
             x = gatconv(x=x, edge_index=edge_index, edge_attr=edge_attr)
             x = self.relu(x)
+            x = x + x0 ###
         x = self.proj(x)
         return x
 
@@ -128,8 +130,10 @@ class gin(nn.Module):
 
     def forward(self, x, edge_index, edge_attr):
         for ginconv in self.ginconv_list:
+            x0 = x ###
             x = ginconv(x=x, edge_index=edge_index, edge_attr=edge_attr)
             x = self.relu(x)
+            x = x + x0 ###
         x = self.proj(x)
         return x
 

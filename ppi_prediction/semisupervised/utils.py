@@ -187,7 +187,9 @@ def evaluate(G_src, G_tgt, seq_encoder, graph_encoder, classifier, use_gnn=True)
     edge_index, edge_attr = [], []
     edge_index_label, edge_attr_label = [], []
     for n1, n2 in G_src.edges():
-        if (G_src.edges[n1, n2]['edge_attr']>=0.4).sum() > 0: edge_index.append([n1, n2]); edge_attr.append(G_src.edges[n1, n2]['edge_attr'])
+        if (G_src.edges[n1, n2]['edge_attr']>=0.4).sum() > 0:
+            edge_index.append([n1, n2]); edge_attr.append(G_src.edges[n1, n2]['edge_attr'])
+            edge_index.append([n2, n1]); edge_attr.append(G_src.edges[n2, n1]['edge_attr'])
         if G_src.edges[n1, n2]['train_val'] == 'val': edge_index_label.append([n1, n2]); edge_attr_label.append(G_src.edges[n1, n2]['label'])
     edge_index = torch.tensor(edge_index).t().to('cuda')
     edge_attr = torch.tensor(edge_attr).to('cuda')
