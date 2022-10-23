@@ -79,12 +79,6 @@ def train():
         pred = classifier( x_src[edge_index_label[0]] + x_src[edge_index_label[1]] )
         loss = ( loss_func(pred[label==0], label[label==0]) + loss_func(pred[label==1], label[label==1]) ) / 2
 
-        if not data_tgt.edge_index_label.shape[0] == 0:
-            edge_index_label = data_tgt.edge_index_label
-            pred = classifier( x_tgt[edge_index_label[0]] + x_tgt[edge_index_label[1]] )
-            label = data_tgt.edge_attr_label
-            loss = loss + loss_func(pred, label)
-
         loss_total += loss.item()
 
         # backward propagation
