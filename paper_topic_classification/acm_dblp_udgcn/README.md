@@ -1,3 +1,5 @@
+# Train & evaluate
+
 ```
 python UDAGCN_demo.py --source acm --target dblp
 python main_adv.py --source acm --target dblp
@@ -10,3 +12,5 @@ python main_specReg.py --source dblp --target acm --gamma_adv 0.01 --thr_smooth 
 python main_specReg.py --source dblp --target acm --gamma_adv 0.01 --thr_mfr 0.01 --gamma_smooth 0.1
 ```
 
+## Acknowledgements
+The experiment is implemented based on https://github.com/GRAND-Lab/UDAGCN.
