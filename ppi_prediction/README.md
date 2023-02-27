@@ -1,3 +1,4 @@
+## Download data
 
 ```
 mkdir ./data ; cd ./data
@@ -16,6 +17,8 @@ wget https://stringdb-static.org/download/protein.links.full.v11.5/7955.protein.
 wget https://stringdb-static.org/download/protein.sequences.v11.5/7955.protein.sequences.v11.5.fa.gz
 cd ..
 ```
+
+## Unsupervised GDA train & evaluate
 
 ```
 cd ./unsupervised
@@ -45,6 +48,8 @@ python main_spectral_regularization.py --tgt_species mouse --adv_train_gamma 0.0
 python main_spectral_regularization.py --tgt_species mouse --adv_train_gamma 0.0001 --spectral_reg_smooth_gamma -1 --spectral_reg_lowpass_gamma 0.01 --spectral_reg_gamma2 0.01
 ```
 
+## Semi-supervised GDA train & evaluate
+
 ```
 cd ./semisupervised
 
@@ -71,5 +76,4 @@ python main_graph_encoder.py --tgt_species mouse
 python main_adv_training.py --tgt_species mouse --adv_train_gamma 0.000001
 python main_spectral_regularization.py --tgt_species mouse --adv_train_gamma 0.0001 --spectral_reg_smooth_gamma 1 --spectral_reg_lowpass_gamma -1 --spectral_reg_gamma2 0.1
 python main_spectral_regularization.py --tgt_species mouse --adv_train_gamma 0.0001 --spectral_reg_smooth_gamma -1 --spectral_reg_lowpass_gamma 1 --spectral_reg_gamma2 0.1
-
 ```
