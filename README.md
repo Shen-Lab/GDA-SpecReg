@@ -8,7 +8,7 @@ In ICLR 2023.
 
 ## Overview
 
-This repo provides two GNN spectral regularizations (SSReg and MFRReg) to tackle distribution shifts for graph data (i.e. graph domain adaptation).
+This repo provides two GNN spectral regularization implementation (SSReg and MFRReg) to tackle distribution shifts for graph data (i.e. graph domain adaptation).
 The developed regularization is grounded on the model-based risk bound analysis in the paper (Corollary 1, Lemma 1, and Lemma 2).
 
 <p align="center" width="100%">
